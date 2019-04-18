@@ -11,6 +11,8 @@ describe 'HashDigger::Digger class' do
     @ex_path              = 'def.*.tr.*.*.ex.*.*.text'
     @tr_path              = 'def.*.tr.*.*.ex.*.*.tr.*.*.text'
     @wrong_path           = 'def.*.tr.*.ex.text'
+    @one_splat_path       = 'def.0.tr.0.ex.*.tr.*'
+    @double_splat_path    = 'def.0.tr.0.ex.*.tr.*.*'
     @wrong_path_beginning = 'worong.0.path'
     @multi_word           = 'such a sucker.with his text!'
 
@@ -42,6 +44,9 @@ describe 'HashDigger::Digger class' do
       'chemical tests',
       'numerous tests'
     ]
+
+    @one_splat_results = [[{:text=>"суровое испытание"}], [{:text=>"проверка на прочность"}]]
+    @double_splat_results = [{:text=>"суровое испытание"}, {:text=>"проверка на прочность"}]
 
     @data = HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test]
   end
@@ -107,5 +112,19 @@ describe 'HashDigger::Digger class' do
       path: @wrong_path_beginning,
       strict: true
     )}.must_raise HashDigger::DigError
+  end
+
+  it 'must handle *.* in the end of the path' do
+    HashDigger::Digger.dig(
+      data: @data,
+      path: @one_splat_path,
+      strict: false
+    ).must_equal @one_splat_results
+
+    HashDigger::Digger.dig(
+      data: @data,
+      path: @double_splat_path,
+      strict: false
+    ).must_equal @double_splat_results
   end
 end

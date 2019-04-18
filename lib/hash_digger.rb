@@ -1,4 +1,4 @@
-require 'hash_digger/version'
+require_relative './hash_digger/version'
 
 require 'ruby-try'
 require 'awesome_print'
@@ -22,25 +22,28 @@ module HashDigger
         path = path(path)
 
         until path.empty? do
-          while path.fetch(0) === '*' && path.fetch(1) === '*' do
+          # *.* stands for "flatten the top level arrays until there's one * left
+          # which means iterate the fetcher with the following path over the result of the flattening"
+          while path.fetch(0) === '*' && path&.fetch(1, nil) === '*' do
             data = data.flatten(1)
             path.shift
           end
+
+          # if the path ends with a "*" and that's it
+          return (block_given? ? yield(data) : data) if path.length === 1 && path.fetch(0) === '*'
 
           subpath = path.shift
 
           if subpath === '*'
             subpath = path.shift
-            data = data.collect {|node| fetch(data: node, path: subpath, strict: strict, default: default) }
+            data = data&.collect {|node| fetch(data: node, path: subpath, strict: strict, default: default) }
           else
             data = fetch(data: data, path: subpath, strict: strict, default: default)
           end
         end
 
-        return data unless block_given?
-
-        # with custom block handler on whole result
-        return yield(data)
+        # return data or apply the custom block handler to whole result
+        return (block_given? ? yield(data) : data)
       end
 
       private
@@ -90,7 +93,6 @@ module HashDigger
 
         return path unless path.last === '*'
 
-        path.pop
         path
       end
     end
@@ -107,6 +109,7 @@ if $0 === __FILE__
   aah = [[{a: 1}, {b: 2}], [{a: 1}, {c: 3}]]
   hhh = {a: {b: {c: {d: 'data'}}}}
   hhhah = {a: {b: {c: {d: [{info: 42}, {info: 13}, {something: 'test'}]}}}}
+  hahah = {a: {b: 42 }, c: [{d: [{test: 'ok'}, {test: 'well'}]}]}
 
   p HashDigger::Digger.dig(data: _h, path: '*')
   p HashDigger::Digger.dig(data: _h, path: 'b')
@@ -134,6 +137,9 @@ if $0 === __FILE__
   p HashDigger::Digger.dig(data: aah, path: '*.*.a', strict: false) { |result| result.compact }
 
   p HashDigger::Digger.dig(data: hhh, path: 'a.b.c.d')
+
+  p HashDigger::Digger.dig(data: hahah, path: 'c.*.d.*')
+  p HashDigger::Digger.dig(data: hahah, path: 'c.*.d.*.*')
 
   begin
     p HashDigger::Digger.dig(data: hhh, path: 'a.b.z.d')
