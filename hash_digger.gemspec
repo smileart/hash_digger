@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Serge Bedzhyk']
   spec.email         = ['smileart21@gmail.com']
 
-  spec.summary       = %q{Hash Digger improved}
-  spec.description   = %q{A digger to extract the data from comlex Hashes with recursion and path in a String}
+  spec.summary       = %q{Hash Digger (improved)}
+  spec.description   = %q{A utilitarian lib to extract data from complex Hashes using String path with recursions}
   spec.homepage      = 'https://github.com/smileart/hash_digger'
   spec.license       = 'MIT'
 

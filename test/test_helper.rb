@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 
 $VERBOSE=nil
+
 Minitest::RelativePosition::TEST_SIZE = 75
 Minitest::Reporters.use! [
   Minitest::Reporters::SpecReporter.new

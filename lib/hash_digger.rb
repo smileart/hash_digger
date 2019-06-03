@@ -42,7 +42,7 @@ module HashDigger
           end
         end
 
-        # return data or apply the custom block handler to whole result
+        # return data or apply the custom block handler to the whole result
         return (block_given? ? yield(data) : data)
       end
 
@@ -97,76 +97,4 @@ module HashDigger
       end
     end
   end
-end
-
-if $0 === __FILE__
-  _h  = {a: 1, b: 2}
-  _a  = [1, 2, 3]
-  ah  = [{a: 42}, {a: 13, b: 7}]
-  ha  = {a: [1, 2, 3], b: [4, 5, 6]}
-  aha = [{a: 42, b: 13}, [1, 2, 3]]
-  hah = {a: [1, 2, 3], b: {a: 13, b: 42}}
-  aah = [[{a: 1}, {b: 2}], [{a: 1}, {c: 3}]]
-  hhh = {a: {b: {c: {d: 'data'}}}}
-  hhhah = {a: {b: {c: {d: [{info: 42}, {info: 13}, {something: 'test'}]}}}}
-  hahah = {a: {b: 42 }, c: [{d: [{test: 'ok'}, {test: 'well'}]}]}
-
-  p HashDigger::Digger.dig(data: _h, path: '*')
-  p HashDigger::Digger.dig(data: _h, path: 'b')
-
-  p HashDigger::Digger.dig(data: _a, path: '*')
-  p HashDigger::Digger.dig(data: _a, path: '2')
-
-  p HashDigger::Digger.dig(data: ah, path: '*.a')
-  p HashDigger::Digger.dig(data: ah, path: '*.b', strict: false)
-  p HashDigger::Digger.dig(data: ah, path: '*.b', strict: false) { |result| result.compact }
-
-  p HashDigger::Digger.dig(data: ha, path: '*')
-  p HashDigger::Digger.dig(data: ha, path: 'a.2')
-  p HashDigger::Digger.dig(data: ha, path: 'b.0')
-
-  p HashDigger::Digger.dig(data: aha, path: '*')
-  p HashDigger::Digger.dig(data: aha, path: '*.0', strict: false)
-
-  p HashDigger::Digger.dig(data: hah, path: '*')
-  p HashDigger::Digger.dig(data: hah, path: 'a')
-  p HashDigger::Digger.dig(data: hah, path: 'a.*')
-  p HashDigger::Digger.dig(data: hah, path: 'b.b')
-
-  p HashDigger::Digger.dig(data: aah, path: '*.*.a', strict: false)
-  p HashDigger::Digger.dig(data: aah, path: '*.*.a', strict: false) { |result| result.compact }
-
-  p HashDigger::Digger.dig(data: hhh, path: 'a.b.c.d')
-
-  p HashDigger::Digger.dig(data: hahah, path: 'c.*.d.*')
-  p HashDigger::Digger.dig(data: hahah, path: 'c.*.d.*.*')
-
-  begin
-    p HashDigger::Digger.dig(data: hhh, path: 'a.b.z.d')
-  rescue HashDigger::DigError => e
-    puts "Correct error being raised! YAY! #{e.class}"
-  end
-
-  p HashDigger::Digger.dig(data: hhhah, path: 'a.b.c.d.*.info', strict: false)
-  p HashDigger::Digger.dig(data: hhhah, path: 'a.b.c.d.*.info', strict: false, default: '<ERROR>')
-  p HashDigger::Digger.dig(data: hhhah, path: 'a.b.c.d.*.something', strict: false)
-  p begin
-    HashDigger::Digger.dig(data: hhhah, path: 'a.b.c.d.*.something', strict: false) do |result|
-      result.map {|node| node.nil? ? 'OK' : node }
-    end
-  end
-
-  require_relative '../test/fixtures/hash_digger'
-
-  direct_path          = 'def.0.tr.0.ex.0.tr.0.text'
-  ex_path              = 'def.*.tr.*.*.ex.*.*.text'
-  tr_path              = 'def.*.tr.*.*.ex.*.*.tr.*.*.text'
-  multi_word           = 'such a sucker.with his text!'
-  wrong_path           = 'def.*.tr.*.ex.text'
-
-  p HashDigger::Digger.dig(data: HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test], path: direct_path, strict: false, default: '<NO DATA>')
-  p HashDigger::Digger.dig(data: HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test], path: ex_path, strict: false, default: '<NO DATA>')
-  p HashDigger::Digger.dig(data: HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test], path: tr_path, strict: false, default: '<NO DATA>')
-  p HashDigger::Digger.dig(data: HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test], path: multi_word, strict: false, default: '<NO DATA>')
-  p HashDigger::Digger.dig(data: HashDiggerFixtures::DICTIONARY_SAMPLE_HASH[:test], path: wrong_path, strict: false, default: '<NO DATA>')
 end
