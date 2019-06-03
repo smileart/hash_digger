@@ -43,6 +43,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'letters', '~> 0.4'
   spec.add_development_dependency 'awesome_print', '~> 1.8'
 
-  spec.add_runtime_dependency 'activesupport', '> 3.0.1'
+  spec.add_runtime_dependency 'activesupport', '~> 3.0'
   spec.add_runtime_dependency 'ruby-try', '~> 1.1'
 end
