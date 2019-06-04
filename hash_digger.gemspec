@@ -34,15 +34,15 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'minitest', '~> 5.11'
   spec.add_development_dependency 'm', '~> 1.5'
   spec.add_development_dependency 'minitest-reporters', '~> 1.3'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'byebug', '~> 10.0'
+  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'byebug', '~> 11.0'
   spec.add_development_dependency 'letters', '~> 0.4'
   spec.add_development_dependency 'awesome_print', '~> 1.8'
 
-  spec.add_runtime_dependency 'activesupport', '~> 3.0'
+  spec.add_runtime_dependency 'activesupport', '~> 5.2'
   spec.add_runtime_dependency 'ruby-try', '~> 1.1'
 end
