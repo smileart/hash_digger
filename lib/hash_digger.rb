@@ -1,5 +1,3 @@
-require_relative './hash_digger/version'
-
 require 'ruby-try'
 require 'awesome_print'
 require 'active_support/core_ext/object/blank'
