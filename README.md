@@ -77,6 +77,17 @@ Or install it yourself as:
   end) # ["OK", "OK", "test"]
 ````
 
+## Existing solutions
+
+There are many existing solutions out there implemented as snippets of code, libraries & answers on StackOverflow, here's just a short list of some:
+
+* [xkeys](https://rubygems.org/gems/xkeys)
+* [vine](https://github.com/chengguangnan/vine)
+* [hashie](https://github.com/hashie/hashie)
+* [Accessing elements of nested hashes in Ruby](https://stackoverflow.com/questions/5544858/accessing-elements-of-nested-hashes-in-ruby)
+* [Ruby Style: How to check whether a nested hash element exists](https://stackoverflow.com/questions/1820451/ruby-style-how-to-check-whether-a-nested-hash-element-exists)
+* [How to avoid NoMethodError for nil elements when accessing nested hashes?](https://stackoverflow.com/questions/20126592/how-to-avoid-nomethoderror-for-nil-elements-when-accessing-nested-hashes)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
