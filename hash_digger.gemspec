@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'byebug', '~> 11.0'
   spec.add_development_dependency 'letters', '~> 0.4'
-  spec.add_development_dependency 'awesome_print', '~> 1.8'
+  spec.add_development_dependency 'amazing_print', '~> 1.2'
 
   spec.add_runtime_dependency 'activesupport', '~> 5.2'
   spec.add_runtime_dependency 'ruby-try', '~> 1.1'
