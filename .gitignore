@@ -10,3 +10,4 @@
 *.gem
 .vscode
 Gemfile.lock
+tags
