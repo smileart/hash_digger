@@ -62,7 +62,7 @@ describe 'HashDigger::Digger class' do
     ).must_equal @data[:def][0][:tr][0][:ex][0][:tr][0][:text]
   end
 
-  it 'must pretty-print the data to visalise the context of the error' do
+  it 'must pretty-print the data to visualise the context of the error' do
     err = Proc.new{ HashDigger::Digger.dig(
       data: @data,
       path: 'x',
