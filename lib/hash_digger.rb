@@ -1,10 +1,10 @@
 require 'ruby-try'
-require 'awesome_print'
+require 'stringio'
+require 'amazing_print'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/hash/indifferent_access'
 
 require 'byebug' if ENV['DEBUG']
-require 'letters' if ENV['DEBUG']
 
 module HashDigger
   class DigError < Exception; end

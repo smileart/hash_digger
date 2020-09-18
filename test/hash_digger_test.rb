@@ -56,11 +56,21 @@ describe 'HashDigger::Digger class' do
   end
 
   it 'must dig direct paths' do
-    @data.dig(:def, 0, :tr, 0, :ex, 0, :tr, 0, :text)
     HashDigger::Digger.dig(
       data: @data,
       path: @direct_path
     ).must_equal @data[:def][0][:tr][0][:ex][0][:tr][0][:text]
+  end
+
+  it 'must pretty-print the data to visalise the context of the error' do
+    err = Proc.new{ HashDigger::Digger.dig(
+      data: @data,
+      path: 'x',
+      strict: true
+    )}.must_raise HashDigger::DigError
+
+    err.message.must_include('----------------------')
+    err.message.must_include('тестируемое устройство')
   end
 
   it 'must act like a Hash.dig' do
